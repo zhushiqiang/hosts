@@ -1,100 +1,90 @@
-# Car Hosts Manager App
+# CarHostsApp - 车机系统 Hosts 管理器
 
-一个专为 Android 9 车机系统设计的 Hosts 管理应用，支持在代码中自定义 hosts 配置。
+一个专为 Android 9 车机系统设计的 Hosts 文件管理应用，支持自定义 hosts 配置。
 
-## 功能特性
+## 特性
 
-- ✅ 支持 Android 9 (API 28) 车机系统
-- ✅ 支持通过代码 programmatically 添加/删除 hosts 条目
-- ✅ 图形界面手动管理 hosts
-- ✅ Root 权限检测和系统 hosts 文件修改
-- ✅ 配置文件备份和恢复
-- ✅ 车机友好的深色主题 UI
-- ✅ 支持 Leanback Launcher (车机启动器)
+- ✅ **支持 Android 9 (API 28)** - 专为车机系统优化
+- ✅ **车机友好界面** - 深色主题，大按钮设计，适合车载屏幕操作
+- ✅ **自定义 Hosts** - 支持代码中和界面手动管理 hosts
+- ✅ **Root 权限支持** - 可直接修改系统 hosts 文件
+- ✅ **备份恢复** - 支持 hosts 配置文件备份和恢复
+- ✅ **Leanback 支持** - 兼容车机 Leanback Launcher
+
+## 快速开始
+
+### 代码中使用
+
+```java
+// 初始化 HostsManager
+HostsManager hostsManager = new HostsManager(context);
+
+// 添加 hosts 条目
+hostsManager.addHostEntry("127.0.0.1", "example.com");
+hostsManager.addHostEntry("192.168.1.100", "api.mycar.com");
+
+// 删除 hosts 条目
+hostsManager.removeHostEntry("example.com");
+
+// 应用 hosts 配置（需要 root 权限）
+boolean success = hostsManager.applyHosts();
+
+// 检查 root 权限
+boolean hasRoot = hostsManager.hasRootAccess();
+```
+
+### 界面使用
+
+1. 打开应用，授予 root 权限
+2. 点击"+"按钮添加新的 hosts 条目
+3. 输入 IP 地址和域名
+4. 点击"应用 Hosts"按钮生效配置
+5. 可导出/导入 hosts 配置备份
+
+## 编译方式
+
+### 使用 Android Studio
+1. 用 Android Studio 打开项目
+2. 等待 Gradle 同步完成
+3. 点击 Build -> Build Bundle(s) / APK(s) -> Build APK(s)
+
+### 使用命令行
+```bash
+./gradlew assembleDebug
+```
+
+生成的 APK 位于：`app/build/outputs/apk/debug/app-debug.apk`
 
 ## 项目结构
 
 ```
-CarHostsApp/
-├── app/
-│   ├── src/main/
-│   │   ├── java/com/carhosts/app/
-│   │   │   ├── HostsManager.java    # 核心 hosts 管理类
-│   │   │   └── MainActivity.java    # UI 界面
-│   │   ├── res/
-│   │   │   ├── layout/
-│   │   │   ├── values/
-│   │   │   └── xml/
-│   │   └── AndroidManifest.xml
-│   └── build.gradle
-├── build.gradle
-├── settings.gradle
-└── gradle.properties
+app/src/main/java/com/carhosts/app/
+├── MainActivity.java          # 主界面 Activity
+├── HostsManager.java          # Hosts 管理核心类
+├── HostsEntry.java            # Hosts 条目数据模型
+└── HostsAdapter.java          # 列表适配器
+
+app/src/main/res/
+├── layout/                    # 布局文件
+├── values/                    # 资源值（颜色、字符串等）
+└── drawable/                  # 图形资源
 ```
 
-## 使用方法
+## 权限说明
 
-### 1. 在代码中自定义 hosts
-
-```java
-// 获取 HostsManager 实例
-HostsManager hostsManager = new HostsManager(context);
-
-// 添加单个 hosts 条目
-hostsManager.addHostEntry("127.0.0.1", "example.com");
-hostsManager.addHostEntry("192.168.1.100", "api.mycar.com");
-
-// 批量添加
-Map<String, String> entries = new HashMap<>();
-entries.put("ads.example.com", "127.0.0.1");
-entries.put("tracking.example.com", "127.0.0.1");
-hostsManager.addHostEntries(entries);
-
-// 应用到系统 (需要 root)
-if (hostsManager.hasRootAccess()) {
-    boolean success = hostsManager.applyHosts();
-}
-
-// 保存配置到应用存储
-hostsManager.saveToAppStorage();
-
-// 从备份加载配置
-hostsManager.loadFromAppStorage();
-```
-
-### 2. 使用 UI 界面
-
-1. 输入 IP 地址和主机名
-2. 点击 "Add Entry" 添加条目
-3. 点击 "Apply to System" 应用到系统 (需要 root)
-4. 长按列表中的条目可删除
-
-## 编译要求
-
-- Android Studio Arctic Fox 或更高版本
-- JDK 8 或更高版本
-- Android SDK API 28+
-
-## 编译步骤
-
-1. 用 Android Studio 打开 `CarHostsApp` 目录
-2. 等待 Gradle 同步完成
-3. 点击 Build → Build Bundle(s) / APK(s) → Build APK(s)
-
-或使用命令行:
-
-```bash
-cd CarHostsApp
-./gradlew assembleDebug
-```
+- **ROOT 权限** - 用于修改系统 hosts 文件 (`/system/etc/hosts`)
+- **存储权限** - 用于导入/导出 hosts 配置文件
 
 ## 注意事项
 
-- **Root 权限**: 修改系统 hosts 文件需要设备已 root
-- **Android 9**: 此应用针对 Android 9 (Pie) 优化，兼容 API 28
-- **车机系统**: 支持车载信息娱乐系统，包含 Leanback Launcher 支持
-- **备份**: 建议先保存配置备份，以便重新安装时恢复
+⚠️ **警告**: 修改系统 hosts 文件需要 root 权限，错误配置可能导致网络连接问题。
+
+⚠️ **车机系统**: 本应用专为车机系统设计，在普通手机上可能需要进行系统分区重新挂载操作。
 
 ## 许可证
 
 MIT License
+
+## 贡献
+
+欢迎提交 Issue 和 Pull Request！
