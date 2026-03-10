@@ -1,0 +1,48 @@
+```
+# Android build outputs
+*.apk
+*.aar
+*.dex
+
+# Android generated files
+build/
+.gradle/
+local.properties
+captures/
+
+# IDE files
+.idea/
+*.iml
+*.iws
+.vscode/
+
+# Compiled files
+*.class
+*.jar
+*.war
+*.ear
+
+# Dependencies
+libs/
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+coverage/
+*.gcov
+*.lcov
+
+# Temporary files
+*.tmp
+*.temp
+```
