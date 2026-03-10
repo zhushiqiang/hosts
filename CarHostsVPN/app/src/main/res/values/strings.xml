@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CarHosts VPN</string>
+    <string name="settings_title">Settings</string>
+    <string name="start_vpn">Start VPN</string>
+    <string name="stop_vpn">Stop VPN</string>
+    <string name="vpn_running">VPN Running</string>
+    <string name="vpn_stopped">VPN Stopped</string>
+</resources>

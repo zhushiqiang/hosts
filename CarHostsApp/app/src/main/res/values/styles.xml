@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">#1a1a2e</item>
-        <item name="android:statusBarColor">#0f0f1e</item>
-        <!-- Car mode friendly theme -->
-        <item name="android:windowShowOnLockScreen">true</item>
-    </style>
-</resources>
